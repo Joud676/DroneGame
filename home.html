@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            background-image: url('drone.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .header2 {
+            margin-top: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        .header2 img {
+            width: 240px;
+            height: auto;
+            margin-top: -72px;
+        }
+
+        .header2 h1 {
+            font-size: 36px;
+            margin: 0;
+            color: #1e0432;
+        }
+
+        .button-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .button-box button {
+            width: 220px;
+            padding: 15px;
+            font-size: 20px;
+            margin: 15px;
+            background-color: rgba(29, 4, 50, 0.8);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .button-box button:hover {
+            background-color: rgb(102, 77, 108);
+            transform: scale(1.05);
+        }
+
+        .button-box button:active {
+            transform: scale(1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header2">
+        <img src="dronelogo.png" alt="Drone Logo"> <!-- Logo Image -->
+        <h1>Drone Game</h1>
+    </div>
+    <div class="button-box">
+        <button onclick="playerSignup()">Player Signup</button>
+        <button onclick="showResult()">Show Result</button>
+        <button onclick="showWinner()">Winner</button> <!-- New Winner Button -->
+    </div>
+
+    <script>
+        function playerSignup() {
+            window.location.href = "Player1.html";
+        }
+
+        function startGame() {
+            window.location.href = "StartTheGame.html";
+        }
+
+        function showResult() {
+            window.location.href = "Results.html";
+        }
+
+        function showWinner() {
+            window.location.href = "GameWinner.html"; // Navigate to GameWinner.html
+        }
+    </script>
+</body>
+
+</html>

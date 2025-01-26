@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Rankings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            background-image: url('drone.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .header {
+            margin-top: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        .header img {
+            width: 240px;
+            height: auto;
+            margin-top: -72px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin: 0;
+            color: #1e0432;
+        }
+
+        .center-right-shape {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            text-align: center;
+            overflow-y: auto;
+            max-height: 70%;
+        }
+
+        .player-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fdfafa;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .player-info span {
+            color: rgba(29, 4, 50, 0.8);
+        }
+
+        .titles {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: rgba(29, 4, 50, 0.8);
+            margin-bottom: 10px;
+        }
+
+        .go-back-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(29, 4, 50, 0.8);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .go-back-button:hover {
+            background-color: rgb(118, 89, 119);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="dronelogo.png" alt="Drone Logo">
+    </div>
+
+    <div class="center-right-shape" id="player-list">
+        <h1 class="result-title">Player Rankings</h1>
+        <div class="titles">
+            <span>Rank</span>
+            <span>Name</span>
+            <span>Time</span>
+        </div>
+        <div id="results-table">
+            <!-- Player results will be populated here -->
+        </div>
+    </div>
+
+    <div class="go-back-button" onclick="goBack()">
+        &#11013; Go Back
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDg799C3vws-5RBoDU4VWlBoN8rcNcxNwM",
+            authDomain: "drone-game-64e34.firebaseapp.com",
+            projectId: "drone-game-64e34",
+            storageBucket: "drone-game-64e34.firebasestorage.app",
+            messagingSenderId: "825512805512",
+            appId: "1:825512805512:web:f069aac239c8a9c773cb3d"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function fetchPlayers() {
+            const playerQuery = query(collection(db, "players"), orderBy("time")); // Order by time
+            const querySnapshot = await getDocs(playerQuery);
+            const resultsTable = document.getElementById("results-table");
+
+            // Clear previous results
+            resultsTable.innerHTML = '';
+
+            let rank = 1; // Initialize rank
+            // Display results
+            querySnapshot.forEach(doc => {
+                const data = doc.data();
+                const playerDiv = document.createElement("div");
+                playerDiv.className = "player-info";
+                playerDiv.innerHTML = `<span>${rank}</span><span>${data.name}</span><span>${data.time}s</span>`; // Display rank, name, and time
+                resultsTable.appendChild(playerDiv);
+                rank++; // Increment rank for the next player
+            });
+
+            // If no results, display a message
+            if (querySnapshot.empty) {
+                resultsTable.innerHTML = "<div>No players found.</div>";
+            }
+        }
+
+        window.onload = fetchPlayers; // Call fetchPlayers on load
+
+        // Attach goBack function to the window object
+        window.goBack = function () {
+            window.location.href = "home.html"; // Change this URL to your home page
+        };
+    </script>
+</body>
+
+</html>
