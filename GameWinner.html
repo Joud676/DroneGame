@@ -113,7 +113,7 @@
         const db = getFirestore(app);
 
         async function fetchWinner() {
-            const playerQuery = query(collection(db, "players"), orderBy("time"), limit(1)); // Order by time and limit to 1
+            const playerQuery = query(collection(db, "players"), orderBy("time"), limit(1)); 
             const querySnapshot = await getDocs(playerQuery);
 
             if (!querySnapshot.empty) {
@@ -129,7 +129,7 @@
 
         // Attach goBack function to the window object
         window.goBack = function () {
-            window.location.href = "home.html"; // Change this URL to your home page
+            window.location.href = "index.html"; 
         };
     </script>
 </body>
